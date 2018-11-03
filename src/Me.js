@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
+import { View, Text, ActivityIndicator, StyleSheet, Button, Image, TextInput } from 'react-native'
 
 export default class Loading extends React.Component {
   componentDidMount() {
@@ -8,7 +8,15 @@ export default class Loading extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Me</Text>
+        <Image
+          style={{width: 150, height: 150, borderRadius: 75}}
+          source={require('../assets/user2.jpg')}
+        />
+        <Text style={{fontSize: 16}}>Name</Text>
+        <TextInput style={{fontSize: 30}}>T</TextInput>
+        <Button
+          onPress={() => this.props.navigation.navigate('Friends')} 
+          title="Add friend"/>
       </View>
     )
   }
