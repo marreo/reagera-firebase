@@ -7,9 +7,23 @@ export default class SignUp extends React.Component {
   handleSignUp = () => {
     firebase
       .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.props.navigation.navigate('Main'))
+      .createUserAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password)
+      .then(createReturn => { this.createUser(createReturn); this.props.navigation.navigate('NavBar') })
       .catch(error => this.setState({ errorMessage: error.message }))
+  }
+  createUser = (createReturn) => {
+    fetch('https://reagera-api.herokuapp.com/api/user', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: 'Test',
+        email: this.state.email,
+        userid: createReturn.user.uid
+      }),
+    });
   }
 render() {
     return (
