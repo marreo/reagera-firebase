@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ActivityIndicator, StyleSheet, Button, Image, TextInput, Alert } from 'react-native'
+import { View, Text, ActivityIndicator, StyleSheet, Button, Image, TextInput, Alert, FlatList } from 'react-native'
 import { Header } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { List, ListItem } from 'react-native-elements'
@@ -47,23 +47,25 @@ export default class Loading extends React.Component {
         }}
       />
         <View style={styles.container}>
-        <Image
-          style={{width: 150, height: 150, borderRadius: 75}}
-          source={require('../assets/user2.jpg')}
-        />
-        <Text style={{fontSize: 20}}>Name</Text>
-        <TextInput 
-          style={{
-            fontSize: 30, 
-            alignSelf: 'center', 
-            textAlign: 'center',
-            minWidth: 90
-          }} 
-          placeholder="Name">
-        </TextInput>
+          <View style={{ flex: 1 }}>
+            <Image
+              style={{width: 150, height: 150, borderRadius: 75}}
+              source={require('../assets/user2.jpg')}
+            />
+            {/* <Text style={{fontSize: 20}}>Name</Text> */}
+            <TextInput 
+              style={{
+                fontSize: 24, 
+                alignSelf: 'center', 
+                textAlign: 'center',
+                minWidth: 90
+              }} 
+              placeholder="Name">
+            </TextInput>
 
-        <Text>My Friends</Text>
-        <List containerStyle={{ marginBottom: 20, alignSelf: 'stretch' }}>
+            <Text style={{textAlign: 'center'}}>My Friends</Text>
+          </View>
+        {/* <List containerStyle={{ marginBottom: 20, alignSelf: 'stretch' }}>
           {
             this.state.data.map((l, i) => (
               <ListItem
@@ -75,10 +77,40 @@ export default class Loading extends React.Component {
               />
             ))
           }
-        </List>
-        <Button
-          onPress={() => this.GetFriendList()}  
-          title="Get Friendlist"/>
+        </List> */}
+          <FlatList
+            style={{alignSelf: 'stretch', flex: 1, flexDirection: 'column'}}
+            data={this.state.data}
+            keyExtractor= {item => item._v}
+            renderItem={
+              ({item}) => 
+              <View style={{alignSelf: 'stretch', backgroundColor: 'white', padding: 10, flex: 2, flexDirection: 'row', borderBottomWidth: 1}}>
+                <View style={{flex: 1, flexDirection: 'column'}}>
+                  <Image
+                    style={{width: 50, height: 50, borderRadius: 75}}
+                    source={require('../assets/user2.jpg')}
+                  />
+                </View>
+                <View style={{
+                  flex: 5, 
+                  alignContent: 'flex-start', 
+                  flexDirection: 'column', 
+                  justifyContent: 'center'
+                }}>
+                  <Text style={{
+                    fontSize: 18
+                  }}>
+                    {item.name}
+                  </Text>
+                  <Text>{item.email}</Text>
+                </View>
+              </View>
+            }
+          />
+          <Button
+            onPress={() => this.GetFriendList()}  
+            title="Get Friendlist"/>
+        </View>
       </View>
     )
   }

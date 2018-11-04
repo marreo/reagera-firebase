@@ -1,44 +1,16 @@
 import React from 'react'
 import { View, Text, ActivityIndicator, StyleSheet, FlatList, Image, Button } from 'react-native'
-import { List, ListItem, Header } from 'react-native-elements'
-
-const list = [{
-  name: 'Amy Farha',
-  avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-  subtitle: 'Vice President'
-},
-{
-  name: 'Bmy Farha',
-  avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-  subtitle: 'Vice President'
-}]
-
-// async function getMoviesFromApi() {
-//   try {
-//     let response = await fetch('https://reagera-api.herokuapp.com/api/friend', {  
-//       method: 'POST',
-//       headers: {
-//         'Accept': 'application/json',
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({
-//         userid: '5bddc17e71f0280015ea90e9'
-//       })
-//     });
-//     let responseJson = await response.json();
-//     console.log(responseJson);
-//     return responseJson;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+import { List, ListItem, Header, Icon } from 'react-native-elements'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 export default class Loading extends React.Component {
   constructor(){
     super();
 
     this.state = {
-      data: []
+      data: [],
+      loading: false,
+      loaded: false,
     }
   }
 
@@ -46,6 +18,11 @@ export default class Loading extends React.Component {
   }
 
   GetUserList = async function(){
+    this.setState({
+      loading: true,
+      loaded: true
+    })
+    
     var response = await fetch('https://reagera-api.herokuapp.com/api/user', {  
       method: 'GET',
       headers: {
@@ -57,6 +34,10 @@ export default class Loading extends React.Component {
     let message = await response.json();
     this.state.data = message;
     this.setState(message);
+    this.setState({
+      loading: false,
+      loaded: true
+    })
   }
 
   pressFriend = async function(id, name) {
@@ -85,20 +66,29 @@ export default class Loading extends React.Component {
         <View style={styles.container}>
         {/* <Text style={{fontSize: 20}}>All users</Text> */}
         <View style={{flex: 9, flexDirection: 'column', alignSelf: 'stretch'}}>
-          <List containerStyle={{ marginBottom: 20, alignSelf: 'stretch' }}>
-            {
-              this.state.data.map((l, i) => (
-                <ListItem
-                  roundAvatar
-                  avatar={require('../assets/user2.jpg')}
-                  key={i}
-                  title={l.name}
-                  subtitle={l.email}
-                  onPress={() => this.pressFriend(l._id, l.name)}
-                />
-              ))
-            }
-          </List>
+          {this.state.loading &&
+              <View style={styles.loading}>
+                  <ActivityIndicator color="red" size='large' animating={this.state.loading} />
+              </View>
+          }
+          {this.state.loaded &&
+            <List containerStyle={{ marginBottom: 20, alignSelf: 'stretch'}}>
+              {
+                this.state.data.map((l, i) => (
+                  <ListItem
+                    roundAvatar
+                    avatar={require('../assets/user2.jpg')}
+                    key={l._id}
+                    title={l.name}
+                    subtitle={l.email}
+                    onPress={() => this.pressFriend(l._id, l.name)}
+                    rightIcon={{ name: 'add', color: '#3D6DCC'}}
+                    // rightIcon={<Ionicons name='ios-add' size={30} color='white' />}
+                  />
+                ))
+              }
+            </List>
+          }
           {/* <FlatList
             style={{alignSelf: 'stretch', flex: 1, flexDirection: 'column'}}
             data={this.state.data}
@@ -131,7 +121,8 @@ export default class Loading extends React.Component {
         <View style={{flex: 1}}>
           <Button
             onPress={() => this.GetUserList()} 
-            title="Get user list"/>
+            title="Get user list"
+            disabled={this.state.loading}/>
         </View>
         </View>
       </View>
@@ -144,5 +135,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  loading: {
+    flex: 1,
+    alignItems: 'stretch',
+    justifyContent: 'center'
   }
 })
