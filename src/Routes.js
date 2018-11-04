@@ -1,12 +1,10 @@
 import React from 'react'
-import { StyleSheet, Platform, Image, Text, View } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { createStackNavigator } from 'react-navigation'
-// import the different screens
+import { Button } from 'react-native-elements'
 import SignUp from './SignUp'
 import NavBarView from './partial/Navbar'
 import Login from './Login'
-import Loading from './Loading'
-// create our app's navigation stack
 const Routes = createStackNavigator(
   {
     NavBar: {
@@ -23,3 +21,19 @@ const Routes = createStackNavigator(
   },
 )
 export default Routes;
+
+
+// navigationOptions: {
+//   headerLeft: null,
+//   headerTitle: 'Hej?',
+//   headerRight: (
+//     <Button icon={<Ionicons name='ios-add' size={15} color='green' />}></Button>
+//   )
+// },
+// headerTitleStyle: {
+//   color: '#000',
+//   zIndex: 1,
+//   fontSize: 18,
+//   lineHeight: 23
+// },
+// animationEnabled: true
