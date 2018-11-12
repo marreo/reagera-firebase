@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, RefreshControl, View, Text, ActivityIndicator, StyleSheet, Button, Image, TextInput, Alert, FlatList } from 'react-native'
+import { View, StyleSheet, Button } from 'react-native'
 import { Header } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
@@ -10,15 +10,9 @@ export default class Loading extends React.Component {
     super();
 
     this.state = {
-      // refreshing: false,
       data: []
     }
   }
-
-  // _onRefresh = () => {
-  //   this.setState({ refreshing: true });
-  //   this.setState({ refreshing: false });
-  // }
 
   handleSubmit = async () => {
     const { status } = this.state
@@ -55,12 +49,6 @@ export default class Loading extends React.Component {
       <FormInput onChangeText={status => this.setState({ status })}></FormInput>
       <FormValidationMessage>Error message?</FormValidationMessage>
       <Button title="Submit" onPress={this.handleSubmit} />
-      {/* <ScrollView refreshControl={
-        <RefreshControl
-          refreshing={this.state.refreshing}
-          onRefresh={this._onRefresh}
-        />
-      } /> */}
       </View>
     )
   }

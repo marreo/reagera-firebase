@@ -31,7 +31,7 @@ export default class Loading extends React.Component {
       }
     })
 
-    let message = await response.json();
+    let message = await response.json();  
     this.state.data = message;
     this.setState(message);
     this.setState({

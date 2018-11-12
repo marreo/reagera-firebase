@@ -1,11 +1,11 @@
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { createBottomTabNavigator } from "react-navigation"
-import MeView from "../Me"
+import HomeView from "../Home"
 import FriendsView from "../Friends"
 export default createBottomTabNavigator({
-      Me: {
-        screen: MeView
+      Home: {
+        screen: HomeView
       },
       Friends: {
         screen: FriendsView
@@ -16,7 +16,7 @@ export default createBottomTabNavigator({
     tabBarIcon: ({ focused, horizontal, tintColor }) => {
       const { routeName } = navigation.state;
       let iconName;
-      if (routeName === 'Me') {
+      if (routeName === 'Home') {
         iconName = `ios-home${focused ? '' : '-outline'}`;
       } else if (routeName === 'Friends') {
         iconName = `ios-contacts${focused ? '' : '-outline'}`;
