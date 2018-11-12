@@ -17,7 +17,7 @@ export default class Loading extends React.Component {
   }
 
   GetFriendList = async function(){
-    var response = await fetch('https://reagera-api.herokuapp.com/api/friend', {  
+    var response = await fetch('https://reagera-api.herokuapp.com/api/friend', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -39,7 +39,7 @@ export default class Loading extends React.Component {
       <Header
         statusBarProps={{ barStyle: 'light-content' }}
         barStyle="light-content" // or directly  icon={<Ionicons name='ios-add' size={15} color='#fff'/>}
-        rightComponent={<Ionicons onPress={() => { Alert.alert('You tapped the button!'); }} name='ios-add' size={30} color='white' />}
+        rightComponent={<Ionicons onPress={() => { this.props.navigation.navigate('NewStatus') }} name='ios-add' size={30} color='white' />}
         leftComponent={<Ionicons onPress={() => { Alert.alert('You tapped the button!'); }} name='ios-contact' size={30} color='white' />}
         containerStyle={{
           backgroundColor: '#3D6DCC',

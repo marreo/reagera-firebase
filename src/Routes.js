@@ -5,10 +5,17 @@ import { Button } from 'react-native-elements'
 import SignUp from './SignUp'
 import NavBarView from './partial/Navbar'
 import Login from './Login'
+import NewStatusView from './NewStatus'
 const Routes = createStackNavigator(
   {
     NavBar: {
       screen: NavBarView,
+      navigationOptions: {
+        header: null
+      }
+    },
+    NewStatus: {
+      screen: NewStatusView,
       navigationOptions: {
         header: null
       }
